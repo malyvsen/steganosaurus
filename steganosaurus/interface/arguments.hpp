@@ -11,7 +11,7 @@ class Arguments
 public:
    Arguments(const int argc, const char * const * const argv);
 
-   enum class Mode {hide, unhide};
+   enum class Mode {unknown = -1, hide, unhide};
 
    const Mode& mode;
    const std::string& dataPath; // only used with mode == hide
@@ -19,13 +19,13 @@ public:
    const std::string& outputPath;
 
 protected:
-   Mode* _mode = nullptr;
-   std::string* _carrierPath = nullptr;
-   std::string* _dataPath = nullptr;
-   std::string* _outputPath = nullptr;
+   Mode _mode = Mode::unknown;
+   std::string _carrierPath = "";
+   std::string _dataPath = "";
+   std::string _outputPath = "";
 
 private:
-   Mode* parseMode(const std::string& name);
+   Mode parseMode(const std::string& name);
 };
 
 
