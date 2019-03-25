@@ -25,7 +25,7 @@ protected:
    std::string _outputPath = "";
 
 private:
-   Mode parseMode(const std::string& name);
+   static Mode parseMode(const std::string& name);
 };
 
 
