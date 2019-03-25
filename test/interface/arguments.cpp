@@ -44,8 +44,8 @@ SCENARIO("arguments are parsed correctly", "[interface]")
          }
          WHEN("arguments are provided in many different ways")
          {
-            const char* argv[] = {programPath, "unhide", carrierPath, outputPath};
-            auto arguments = Arguments(4, argv);
+            const char* argv[] = {programPath, "-m", "unhide", "--output", outputPath, carrierPath};
+            auto arguments = Arguments(6, argv);
             REQUIRE(arguments.mode == Arguments::Mode::unhide);
             REQUIRE(arguments.dataPath == "");
             REQUIRE(arguments.carrierPath == carrierPath);
