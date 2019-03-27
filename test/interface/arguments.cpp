@@ -1,3 +1,4 @@
+#include <test/catch.hpp>
 #include "../../steganosaurus/interface/arguments.cpp"
 
 
