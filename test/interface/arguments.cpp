@@ -55,3 +55,45 @@ SCENARIO("arguments are parsed correctly", "[interface]")
       }
    }
 }
+
+SCENARIO("arguments are not parsed correctly", "[interface]")
+{
+
+   GIVEN("hardcoded non-existent paths")
+   {
+      const char* programPath = "./program";
+      const char* dataPath = "./data";
+      const char* carrierPath = "./carrier";
+      const char* outputPath = "./output";
+
+      WHEN("arguments are not provided")
+      {
+         const char* argv[] = {programPath};
+         REQUIRE_THROWS(Arguments(1, argv));
+      }
+
+      WHEN("the mode is wrong")
+      {
+         const char* argv[] = {programPath, "encode", dataPath, carrierPath, outputPath};
+         REQUIRE_THROWS(Arguments(5, argv));
+      }
+//      FIXME
+//      WHEN("provided too many arguments")
+//      {
+//         const char* argv[] = {programPath, "-m", "hide", "-c", carrierPath, "-d", dataPath, "-o", outputPath, "-f"};
+//         REQUIRE_THROWS(Arguments(10, argv));
+//      }
+
+      WHEN("argument is provided more than once ")
+      {
+         const char* argv[] = {programPath, "-m", "unhide", "--output", outputPath, "-c", carrierPath, "--output", outputPath};
+         REQUIRE_THROWS(Arguments(9, argv));
+      }
+
+      WHEN("data path is provided with unhide flag")
+      {
+         const char* argv[] = {programPath, "-m", "unhide", "-o", outputPath, "-c", carrierPath, "-d", dataPath};
+         REQUIRE_THROWS(Arguments(9, argv));
+      }
+    }
+}
