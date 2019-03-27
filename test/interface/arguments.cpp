@@ -2,7 +2,7 @@
 #include "../../steganosaurus/interface/arguments.cpp"
 
 
-SCENARIO("arguments are parsed correctly", "[interface]")
+SCENARIO("arguments are passed correctly", "[interface]")
 {
    GIVEN("hardcoded non-existent paths")
    {
@@ -56,7 +56,7 @@ SCENARIO("arguments are parsed correctly", "[interface]")
    }
 }
 
-SCENARIO("arguments are not parsed correctly", "[interface]")
+SCENARIO("arguments are not passed correctly", "[interface]")
 {
 
    GIVEN("hardcoded non-existent paths")
@@ -77,12 +77,12 @@ SCENARIO("arguments are not parsed correctly", "[interface]")
          const char* argv[] = {programPath, "encode", dataPath, carrierPath, outputPath};
          REQUIRE_THROWS(Arguments(5, argv));
       }
-//      FIXME
-//      WHEN("provided too many arguments")
-//      {
-//         const char* argv[] = {programPath, "-m", "hide", "-c", carrierPath, "-d", dataPath, "-o", outputPath, "-f"};
-//         REQUIRE_THROWS(Arguments(10, argv));
-//      }
+
+      WHEN("provided too many arguments")
+      {
+         const char* argv[] = {programPath, "-m", "hide", "-c", carrierPath, "-d", dataPath, "-o", outputPath, "-f"};
+         REQUIRE_THROWS(Arguments(10, argv));
+      }
 
       WHEN("argument is provided more than once ")
       {

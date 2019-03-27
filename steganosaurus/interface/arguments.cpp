@@ -43,6 +43,7 @@ Arguments::Arguments(const int argc, const char * const * const argv) :
          if (i + 1 >= argc) throw std::invalid_argument("output path argument value missing");
          _outputPath = std::string(argv[++i]);
       }
+      else throw std::invalid_argument(std::string("unrecognized argument: ") + arg);
    }
 
    // validity & completeness checks
