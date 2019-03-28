@@ -16,9 +16,10 @@ add_executable(steganosaurus
         steganosaurus/communicator/encoders/iencoder.h
         steganosaurus/communicator/encoders/simpleencoder.cpp
         steganosaurus/communicator/encoders/simpleencoder.h
-        steganosaurus/communicator/commyunicator.cpp
-        steganosaurus/communicator/commyunicator.h
+        steganosaurus/communicator/communicator.cpp
+        steganosaurus/communicator/communicator.h
         steganosaurus/interface/arguments.cpp
-        steganosaurus/interface/arguments.hpp)
+        steganosaurus/interface/arguments.hpp
+        steganosaurus/main.cpp)
 
 add_executable(test test/main.cpp)
