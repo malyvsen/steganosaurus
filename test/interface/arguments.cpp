@@ -24,7 +24,7 @@ SCENARIO("arguments are passed correctly", "[interface]")
          }
          WHEN("arguments are provided in many different ways")
          {
-            const char* argv[] = {"./program", "--mode", "write", "-c", "./carrier", "./data", "-o", "./output"};
+            const char* argv[] = {programPath, "--mode", "write", "-c", carrierPath, dataPath, "-o", outputPath};
             auto arguments = Arguments().Parse(8, argv);
             REQUIRE(arguments.mode == Arguments::Mode::write);
             REQUIRE(arguments.dataPath == dataPath);
