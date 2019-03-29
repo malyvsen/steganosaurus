@@ -66,5 +66,6 @@ Arguments::Mode Arguments::_ParseMode(const std::string& name)
 {
    if (name == "write") return Mode::write;
    if (name == "read") return Mode::read;
+   if (name == "clear") return Mode::clear;
    throw std::invalid_argument(std::string("\"") + name + std::string("\" is not a valid mode"));
 }

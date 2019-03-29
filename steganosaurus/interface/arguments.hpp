@@ -10,7 +10,7 @@ class Arguments
 public:
    Arguments(const int argc, const char * const * const argv);
 
-   enum class Mode {unknown = -1, write, read};
+   enum class Mode {unknown = -1, write, read, clear};
 
    const Mode& mode;
    const std::string& dataPath; // only used with mode == write
