@@ -13,7 +13,7 @@ Arguments::Arguments(const int argc, const char * const * const argv) :
       auto arg = std::string(argv[i]);
       if (arg.find("-") != 0) // unnamed arguments
       {
-         if (_mode == Mode::unknown) _mode = parseMode(arg);
+         if (_mode == Mode::unknown) _mode = _ParseMode(arg);
          else if (_mode == Mode::hide && _dataPath == "") _dataPath = std::string(arg);
          else if (_carrierPath == "") _carrierPath = std::string(arg);
          else if (_outputPath == "") _outputPath = std::string(arg);
@@ -23,7 +23,7 @@ Arguments::Arguments(const int argc, const char * const * const argv) :
       {
          if (_mode != Mode::unknown) throw std::invalid_argument("mode provided more than once");
          if (i + 1 >= argc) throw std::invalid_argument("mode argument value missing");
-         _mode = parseMode(std::string(argv[++i]));
+         _mode = _ParseMode(std::string(argv[++i]));
       }
       else if (arg == "-d" || arg == "--data")
       {
@@ -62,7 +62,7 @@ Arguments::Arguments(const int argc, const char * const * const argv) :
 
 
 
-Arguments::Mode Arguments::parseMode(const std::string& name)
+Arguments::Mode Arguments::_ParseMode(const std::string& name)
 {
    if (name == "hide") return Mode::hide;
    if (name == "unhide") return Mode::unhide;
