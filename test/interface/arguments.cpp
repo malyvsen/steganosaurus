@@ -11,43 +11,43 @@ SCENARIO("arguments are passed correctly", "[interface]")
       const char* carrierPath = "./carrier";
       const char* outputPath = "./output";
 
-      WHEN("mode is hide")
+      WHEN("mode is write")
       {
          WHEN("arguments are provided in order")
          {
-            const char* argv[] = {programPath, "hide", dataPath, carrierPath, outputPath};
+            const char* argv[] = {programPath, "write", dataPath, carrierPath, outputPath};
             auto arguments = Arguments(5, argv);
-            REQUIRE(arguments.mode == Arguments::Mode::hide);
+            REQUIRE(arguments.mode == Arguments::Mode::write);
             REQUIRE(arguments.dataPath == dataPath);
             REQUIRE(arguments.carrierPath == carrierPath);
             REQUIRE(arguments.outputPath == outputPath);
          }
          WHEN("arguments are provided in many different ways")
          {
-            const char* argv[] = {"./program", "--mode", "hide", "-c", "./carrier", "./data", "-o", "./output"};
+            const char* argv[] = {"./program", "--mode", "write", "-c", "./carrier", "./data", "-o", "./output"};
             auto arguments = Arguments(8, argv);
-            REQUIRE(arguments.mode == Arguments::Mode::hide);
+            REQUIRE(arguments.mode == Arguments::Mode::write);
             REQUIRE(arguments.dataPath == dataPath);
             REQUIRE(arguments.carrierPath == carrierPath);
             REQUIRE(arguments.outputPath == outputPath);
          }
       }
-      WHEN("mode is unhide")
+      WHEN("mode is read")
       {
          WHEN("arguments are provided in order")
          {
-            const char* argv[] = {programPath, "unhide", carrierPath, outputPath};
+            const char* argv[] = {programPath, "read", carrierPath, outputPath};
             auto arguments = Arguments(4, argv);
-            REQUIRE(arguments.mode == Arguments::Mode::unhide);
+            REQUIRE(arguments.mode == Arguments::Mode::read);
             REQUIRE(arguments.dataPath == "");
             REQUIRE(arguments.carrierPath == carrierPath);
             REQUIRE(arguments.outputPath == outputPath);
          }
          WHEN("arguments are provided in many different ways")
          {
-            const char* argv[] = {programPath, "-m", "unhide", "--output", outputPath, carrierPath};
+            const char* argv[] = {programPath, "-m", "read", "--output", outputPath, carrierPath};
             auto arguments = Arguments(6, argv);
-            REQUIRE(arguments.mode == Arguments::Mode::unhide);
+            REQUIRE(arguments.mode == Arguments::Mode::read);
             REQUIRE(arguments.dataPath == "");
             REQUIRE(arguments.carrierPath == carrierPath);
             REQUIRE(arguments.outputPath == outputPath);
@@ -80,19 +80,19 @@ SCENARIO("arguments are not passed correctly", "[interface]")
 
       WHEN("provided too many arguments")
       {
-         const char* argv[] = {programPath, "-m", "hide", "-c", carrierPath, "-d", dataPath, "-o", outputPath, "-f"};
+         const char* argv[] = {programPath, "-m", "write", "-c", carrierPath, "-d", dataPath, "-o", outputPath, "-f"};
          REQUIRE_THROWS(Arguments(10, argv));
       }
 
       WHEN("argument is provided more than once ")
       {
-         const char* argv[] = {programPath, "-m", "unhide", "--output", outputPath, "-c", carrierPath, "--output", outputPath};
+         const char* argv[] = {programPath, "-m", "read", "--output", outputPath, "-c", carrierPath, "--output", outputPath};
          REQUIRE_THROWS(Arguments(9, argv));
       }
 
-      WHEN("data path is provided with unhide flag")
+      WHEN("data path is provided with read flag")
       {
-         const char* argv[] = {programPath, "-m", "unhide", "-o", outputPath, "-c", carrierPath, "-d", dataPath};
+         const char* argv[] = {programPath, "-m", "read", "-o", outputPath, "-c", carrierPath, "-d", dataPath};
          REQUIRE_THROWS(Arguments(9, argv));
       }
     }

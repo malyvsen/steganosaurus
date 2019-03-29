@@ -14,7 +14,7 @@ Arguments::Arguments(const int argc, const char * const * const argv) :
       if (arg.find("-") != 0) // unnamed arguments
       {
          if (_mode == Mode::unknown) _mode = _ParseMode(arg);
-         else if (_mode == Mode::hide && _dataPath == "") _dataPath = std::string(arg);
+         else if (_mode == Mode::write && _dataPath == "") _dataPath = std::string(arg);
          else if (_carrierPath == "") _carrierPath = std::string(arg);
          else if (_outputPath == "") _outputPath = std::string(arg);
          else throw std::invalid_argument("too many command-line arguments");
@@ -48,13 +48,13 @@ Arguments::Arguments(const int argc, const char * const * const argv) :
 
    // validity & completeness checks
    if (_mode == Mode::unknown) throw std::invalid_argument("mode not provided");
-   if (_mode == Mode::hide)
+   if (_mode == Mode::write)
    {
       if (_dataPath == "") throw std::invalid_argument("data path not provided");
    }
    else
    {
-      if (_dataPath != "") throw std::invalid_argument("data path provided with mode == unhide");
+      if (_dataPath != "") throw std::invalid_argument("data path provided with mode == read");
    }
    if (_carrierPath == "") throw std::invalid_argument("carrier path not provided");
    if (_outputPath == "") throw std::invalid_argument("output path not provided");
@@ -64,7 +64,7 @@ Arguments::Arguments(const int argc, const char * const * const argv) :
 
 Arguments::Mode Arguments::_ParseMode(const std::string& name)
 {
-   if (name == "hide") return Mode::hide;
-   if (name == "unhide") return Mode::unhide;
-   throw std::invalid_argument(std::string("mode ") + name + std::string(" not recognized"));
+   if (name == "write") return Mode::write;
+   if (name == "read") return Mode::read;
+   throw std::invalid_argument(std::string("\"") + name + std::string("\" is not a valid mode"));
 }

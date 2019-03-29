@@ -10,10 +10,10 @@ class Arguments
 public:
    Arguments(const int argc, const char * const * const argv);
 
-   enum class Mode {unknown = -1, hide, unhide};
+   enum class Mode {unknown = -1, write, read};
 
    const Mode& mode;
-   const std::string& dataPath; // only used with mode == hide
+   const std::string& dataPath; // only used with mode == write
    const std::string& carrierPath;
    const std::string& outputPath;
 

@@ -10,10 +10,10 @@ int Communicator::Action(Arguments *args)
 
     switch(args->mode)
     {
-        case Arguments::Mode::hide:
+        case Arguments::Mode::write:
             return Encode(args->carrierPath, args->dataPath, args->outputPath);
             break;
-        case Arguments::Mode::unhide:
+        case Arguments::Mode::read:
             return Decode(args->carrierPath, args->outputPath);
             break;
         default:
