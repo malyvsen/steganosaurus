@@ -1,6 +1,9 @@
-#include "communicator.h"
-#include <encoders/simpleencoder.h>
 #include <memory>
+#include "communicator.hpp"
+#include "../encoders/simpleencoder.hpp"
+
+
+
 int Communicator::Action(Arguments *args)
 {
     InicializeEncoder(EncoderTypeEnum::simple);  //td

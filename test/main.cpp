@@ -2,4 +2,4 @@
 #include "catch.hpp"
 
 
-#include "interface/arguments.cpp"
+#include "_include.hpp"

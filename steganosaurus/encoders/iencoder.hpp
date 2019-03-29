@@ -1,7 +1,9 @@
-#ifndef IENCODER_H
-#define IENCODER_H
+#pragma once
 
 #include <fstream>
+
+
+
 class IEncoder
 {
 public:
@@ -9,5 +11,3 @@ public:
     int virtual Encode(std::ifstream &photo, std::ifstream &data, std::ofstream &output) = 0;
     int virtual Decode( std::ifstream &photo, std::ofstream &output) = 0;
 };
-
-#endif // IENCODER_H

@@ -1,5 +1,4 @@
-#ifndef INTERFACE_ARGUMENTS
-#define INTERFACE_ARGUMENTS
+#pragma once
 
 #include <string>
 #include <stdexcept>
@@ -27,7 +26,3 @@ protected:
 private:
    static Mode _ParseMode(const std::string& name);
 };
-
-
-
-#endif // INTERFACE_ARGUMENTS

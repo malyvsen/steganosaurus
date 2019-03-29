@@ -1,7 +1,9 @@
-#ifndef SIMPLEENCODER_H
-#define SIMPLEENCODER_H
+#pragma once
 
-#include <encoders/iencoder.h>
+#include "iencoder.hpp"
+
+
+
 class SimpleEncoder :virtual public IEncoder
 {
 public:
@@ -12,5 +14,3 @@ public:
     int Encode(std::ifstream &photo, std::ifstream &data, std::ofstream &output);
     int Decode( std::ifstream &photo, std::ofstream &output);
 };
-
-#endif // SIMPLEENCODER_H

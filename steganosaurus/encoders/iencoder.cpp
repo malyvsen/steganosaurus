@@ -1,4 +1,4 @@
-#include "iencoder.h"
+#include "iencoder.hpp"
 
 IEncoder::IEncoder()
 {

@@ -1,11 +1,12 @@
-#ifndef COMMYUNICATOR_H
-#define COMMYUNICATOR_H
+#pragma once
 
-#include <encoders/iencoder.h>
-#include "interface/arguments.hpp"
 #include <fstream>
 #include <memory>
 #include <string>
+#include "../encoders/iencoder.hpp"
+#include "../interface/arguments.hpp"
+
+
 
 class Communicator
 {
@@ -37,5 +38,3 @@ private:
 
     IEncoder *_encoder = nullptr;
 };
-
-#endif // COMMYUNICATOR_H

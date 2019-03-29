@@ -1,6 +1,9 @@
-#include "simpleencoder.h"
 #include <iostream>
 #include <fstream>
+#include "simpleencoder.hpp"
+
+
+
 SimpleEncoder::SimpleEncoder()
 {
 
@@ -35,4 +38,3 @@ int SimpleEncoder::Decode(std::ifstream &photo, std::ofstream &output)
         output << memblock[pfotoSize - 4 - dataSize + i];
     delete[] memblock;
 }
-
