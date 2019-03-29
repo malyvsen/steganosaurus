@@ -16,7 +16,7 @@ SCENARIO("arguments are passed correctly", "[interface]")
          WHEN("arguments are provided in order")
          {
             const char* argv[] = {programPath, "write", dataPath, carrierPath, outputPath};
-            auto arguments = Arguments(5, argv);
+            auto arguments = Arguments().Parse(5, argv);
             REQUIRE(arguments.mode == Arguments::Mode::write);
             REQUIRE(arguments.dataPath == dataPath);
             REQUIRE(arguments.carrierPath == carrierPath);
@@ -25,7 +25,7 @@ SCENARIO("arguments are passed correctly", "[interface]")
          WHEN("arguments are provided in many different ways")
          {
             const char* argv[] = {"./program", "--mode", "write", "-c", "./carrier", "./data", "-o", "./output"};
-            auto arguments = Arguments(8, argv);
+            auto arguments = Arguments().Parse(8, argv);
             REQUIRE(arguments.mode == Arguments::Mode::write);
             REQUIRE(arguments.dataPath == dataPath);
             REQUIRE(arguments.carrierPath == carrierPath);
@@ -37,7 +37,7 @@ SCENARIO("arguments are passed correctly", "[interface]")
          WHEN("arguments are provided in order")
          {
             const char* argv[] = {programPath, "read", carrierPath, outputPath};
-            auto arguments = Arguments(4, argv);
+            auto arguments = Arguments().Parse(4, argv);
             REQUIRE(arguments.mode == Arguments::Mode::read);
             REQUIRE(arguments.dataPath == "");
             REQUIRE(arguments.carrierPath == carrierPath);
@@ -46,7 +46,7 @@ SCENARIO("arguments are passed correctly", "[interface]")
          WHEN("arguments are provided in many different ways")
          {
             const char* argv[] = {programPath, "-m", "read", "--output", outputPath, carrierPath};
-            auto arguments = Arguments(6, argv);
+            auto arguments = Arguments().Parse(6, argv);
             REQUIRE(arguments.mode == Arguments::Mode::read);
             REQUIRE(arguments.dataPath == "");
             REQUIRE(arguments.carrierPath == carrierPath);
@@ -69,31 +69,31 @@ SCENARIO("arguments are not passed correctly", "[interface]")
       WHEN("arguments are not provided")
       {
          const char* argv[] = {programPath};
-         REQUIRE_THROWS(Arguments(1, argv));
+         REQUIRE_THROWS(Arguments().Parse(1, argv));
       }
 
       WHEN("the mode is wrong")
       {
          const char* argv[] = {programPath, "encode", dataPath, carrierPath, outputPath};
-         REQUIRE_THROWS(Arguments(5, argv));
+         REQUIRE_THROWS(Arguments().Parse(5, argv));
       }
 
       WHEN("provided too many arguments")
       {
          const char* argv[] = {programPath, "-m", "write", "-c", carrierPath, "-d", dataPath, "-o", outputPath, "-f"};
-         REQUIRE_THROWS(Arguments(10, argv));
+         REQUIRE_THROWS(Arguments().Parse(10, argv));
       }
 
       WHEN("argument is provided more than once ")
       {
          const char* argv[] = {programPath, "-m", "read", "--output", outputPath, "-c", carrierPath, "--output", outputPath};
-         REQUIRE_THROWS(Arguments(9, argv));
+         REQUIRE_THROWS(Arguments().Parse(9, argv));
       }
 
       WHEN("data path is provided with read flag")
       {
          const char* argv[] = {programPath, "-m", "read", "-o", outputPath, "-c", carrierPath, "-d", dataPath};
-         REQUIRE_THROWS(Arguments(9, argv));
+         REQUIRE_THROWS(Arguments().Parse(9, argv));
       }
     }
 }

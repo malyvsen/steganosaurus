@@ -8,7 +8,8 @@
 class Arguments
 {
 public:
-   Arguments(const int argc, const char * const * const argv);
+   Arguments();
+   Arguments& Parse(const int argc, const char * const * const argv);
 
    enum class Mode {unknown = -1, write, read, clear};
 

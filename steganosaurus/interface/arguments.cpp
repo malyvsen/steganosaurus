@@ -2,11 +2,11 @@
 
 
 
-Arguments::Arguments(const int argc, const char * const * const argv) :
-   mode(_mode),
-   dataPath(_dataPath),
-   carrierPath(_carrierPath),
-   outputPath(_outputPath)
+Arguments::Arguments() : mode(_mode), dataPath(_dataPath), carrierPath(_carrierPath), outputPath(_outputPath) {}
+
+
+
+Arguments& Arguments::Parse(const int argc, const char * const * const argv)
 {
    for (int i = 1; i < argc; i++)
    {
@@ -58,6 +58,8 @@ Arguments::Arguments(const int argc, const char * const * const argv) :
    }
    if (_carrierPath == "") throw std::invalid_argument("carrier path not provided");
    if (_outputPath == "") throw std::invalid_argument("output path not provided");
+
+   return *this;
 }
 
 

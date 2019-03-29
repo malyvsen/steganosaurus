@@ -4,8 +4,7 @@
 
 int main(int argc,char** argv)
 {
-   Arguments *arg = new Arguments(argc, argv);
-   Communicator::getInstance().Action(arg);
-   delete arg;
+   auto arguments = Arguments().Parse(argc, argv);
+   Communicator::getInstance().Action(&arguments);
    return 0;
 }
