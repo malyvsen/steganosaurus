@@ -8,13 +8,18 @@ Download the latest relevant version from [releases](https://github.com/malyvsen
 
 # Usage
 To write some data onto a carrier and save the modified carrier:
-```bash
+```
 steganosaurus write <data> <carrier> <output>
 ```
 
 To read data from a carrier and save what was read:
-```bash
+```
 steganosaurus read <carrier> <output>
+```
+
+To remove written data from a carrier:
+```
+steganosaurus clear <carrier> <output>
 ```
 
 # Legal
