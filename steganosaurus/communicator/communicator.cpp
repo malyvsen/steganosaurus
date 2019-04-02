@@ -16,6 +16,8 @@ int Communicator::Action(Arguments *args)
         case Arguments::Mode::read:
             return Decode(args->carrierPath, args->outputPath);
             break;
+        case Arguments::Mode::clear:
+            return Clear(args->carrierPath, args->outputPath);
         default:
             return -1;
     }
@@ -70,7 +72,6 @@ int Communicator::Decode(std::string carrierPath, std::string outputPath)
     std::ofstream output;
     output.open(outputPath,std::ios_base::out | std::ios_base::binary);
     if (!photo.is_open())
-    if (!photo.is_open())
     {
         return -2;
     }
@@ -80,6 +81,27 @@ int Communicator::Decode(std::string carrierPath, std::string outputPath)
     }
 
     _encoder->Decode(photo, output);
+
+    photo.close();
+    output.close();
+}
+
+int Communicator::Clear(std::string carrierPath, std::string outputPath)
+{
+    std::ifstream photo;
+    photo.open(carrierPath,std::ios_base::in | std::ios_base::binary);
+    std::ofstream output;
+    output.open(outputPath,std::ios_base::out | std::ios_base::binary);
+    if (!photo.is_open())
+    {
+        return -2;
+    }
+    if (!output.is_open())
+    {
+        return -4;
+    }
+
+    _encoder->Clear(photo, output);
 
     photo.close();
     output.close();

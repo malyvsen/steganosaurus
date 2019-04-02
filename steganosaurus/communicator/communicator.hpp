@@ -32,6 +32,7 @@ private:
     int InicializeEncoder(EncoderTypeEnum encoderType);
     int Encode(std::string carrierPath, std::string dataPath, std::string outputPath);
     int Decode(std::string carrierPath, std::string outputPath);
+    int Clear(std::string carrierPath, std::string outputPath);
 
 
     //std::unique_ptr<IEncoder> _encoder;
