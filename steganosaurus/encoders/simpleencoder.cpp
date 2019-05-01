@@ -14,8 +14,6 @@ int SimpleEncoder::Encode(std::ifstream &photo, std::ifstream &data, std::ofstre
     output << photo.rdbuf();
     output << data.rdbuf();
     int dataSize = data.tellg();
-    std::cout << dataSize << std::endl;
-    std::cout << (char*)&dataSize << std::endl;
     output << ((char*)&dataSize)[3];
     output << ((char*)&dataSize)[2];
     output << ((char*)&dataSize)[1];
@@ -33,7 +31,6 @@ int SimpleEncoder::Decode(std::ifstream &photo, std::ofstream &output)
     for(int i = 0; i< 4; i++)
         dataSizeBuf[i] = memblock[pfotoSize - 1 - i];
     int dataSize = *(int*)dataSizeBuf;
-    std::cout << dataSize << std::endl;
     for(int i = 0; i < dataSize; i++)
         output << memblock[pfotoSize - 4 - dataSize + i];
     delete[] memblock;
