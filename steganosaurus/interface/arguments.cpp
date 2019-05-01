@@ -54,7 +54,7 @@ Arguments* Arguments::Parse(const int argc, const char * const * const argv)
    }
    else
    {
-      if (_dataPath != "") throw std::invalid_argument("data path provided with mode == read");
+      if (_dataPath != "") throw std::invalid_argument(std::string("data path provided with mode == ") + _ModeName(_mode));
    }
    if (_carrierPath == "") throw std::invalid_argument("carrier path not provided");
    if (_outputPath == "") throw std::invalid_argument("output path not provided");
@@ -70,4 +70,15 @@ Arguments::Mode Arguments::_ParseMode(const std::string& name)
    if (name == "read") return Mode::read;
    if (name == "clear") return Mode::clear;
    throw std::invalid_argument(std::string("\"") + name + std::string("\" is not a valid mode"));
+}
+
+
+
+std::string Arguments::_ModeName(const Mode mode)
+{
+    if (mode == Mode::write) return "write";
+    if (mode == Mode::read) return "read";
+    if (mode == Mode::clear) return "clear";
+    if (mode == Mode::unknown) return "unknown";
+    throw std::invalid_argument(std::string("mode ") + std::to_string((int)mode) + std::string(" is not a valid mode"));
 }

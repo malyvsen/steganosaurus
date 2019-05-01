@@ -26,4 +26,5 @@ protected:
 
 private:
    static Mode _ParseMode(const std::string& name);
+   static std::string _ModeName(const Mode mode);
 };
