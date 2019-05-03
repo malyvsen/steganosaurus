@@ -1,5 +1,5 @@
 #include "../catch.hpp"
-#include "../../steganosaurus/interface/_include.hpp"
+#include "../../steganosaurus/interface/arguments.cpp"
 
 
 SCENARIO("arguments are passed correctly", "[interface]")
