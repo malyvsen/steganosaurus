@@ -37,3 +37,5 @@ test "- user provided correct arguments in clear mode using explicit style: " ".
 test "- user provided too many arguments: " "./steganosaurus -m clear -o output -c carrier -x" "error: unrecognized argument: -x"
 
 test "- user provided data path in read mode: " "./steganosaurus -m read -o output -c carrier -d data" "error: data path provided with mode == read"
+
+test "- user provided data path in clear mode: " "./steganosaurus -m clear -o output -c carrier -d data" "error: data path provided with mode == clear"
