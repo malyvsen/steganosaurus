@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # empty data file
+echo -n "- read/write jpeg files: "
 touch data
 ./steganosaurus -m write -o output.jpg -c image.jpg -d data
 cmp image.jpg output.jpg
