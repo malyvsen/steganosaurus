@@ -3,6 +3,10 @@
 </div>
 Simple command-line utility for JPG steganography.
 
+# Stega... what?
+Steganography is the practice of hiding communication in a way which makes it difficult to find out that the communication happened at all.
+Steganosaurus can hide any kind of data file inside a JPG image so that the image still looks the same to the unsuspecting eye. Only someone who also has steganosaurus (or a similar utility) will be able to read the data hidden in the image.
+
 # Installation
 Download the latest relevant version from [releases](https://github.com/malyvsen/steganosaurus/releases).
 
