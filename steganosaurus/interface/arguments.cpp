@@ -62,6 +62,18 @@ Arguments* Arguments::Parse(const int argc, const char * const * const argv)
    return this;
 }
 
+Arguments::Arguments(Arguments::Mode Mod, std::string CarrierPath, std::string OutputPath, std::string DataPath) :
+   mode(_mode),
+   dataPath(_dataPath),
+   carrierPath(_carrierPath),
+   outputPath(_outputPath)
+{
+    _mode = Mod;
+    _carrierPath = CarrierPath;
+    _outputPath = OutputPath;
+    _dataPath = DataPath;
+}
+
 
 
 Arguments::Mode Arguments::_ParseMode(const std::string& name)

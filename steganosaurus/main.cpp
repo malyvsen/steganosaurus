@@ -1,13 +1,23 @@
 #include "_include.hpp"
-
+#include <QApplication>
 
 
 int main(int argc,char** argv)
 {
    try 
    {
-        auto arguments = new Arguments();
-        arguments->Parse(argc, argv);
+        Arguments * arguments = new Arguments();
+        if(argc == 1)
+        {
+            QApplication qtApp(argc, argv);
+            QtInterface gui(&arguments);
+            gui.show();
+            int ret = qtApp.exec();
+        }
+        else
+        {
+            arguments->Parse(argc, argv);
+        }
         Communicator::getInstance().Action(arguments);
         delete arguments;
    }
