@@ -1,31 +1,27 @@
 #include "_include.hpp"
-#include <QApplication>
 
 
 int main(int argc,char** argv)
 {
-   try 
+   try
    {
-        Arguments * arguments = new Arguments();
-        if(argc == 1)
-        {
+        Arguments* arguments = new Arguments();
+        #ifdef GUI
             QApplication qtApp(argc, argv);
             QtInterface gui(&arguments);
             gui.show();
             int ret = qtApp.exec();
-        }
-        else
-        {
+        #else
             arguments->Parse(argc, argv);
-        }
-        Communicator::getInstance().Action(arguments);
+            Communicator::getInstance().Action(arguments);
+        #endif
         delete arguments;
    }
-   catch (std::invalid_argument e) 
+   catch (std::invalid_argument e)
    {
         std::cout << "error: " << e.what() << '\n';
         return 1;
    }
-   
+
    return 0;
 }
