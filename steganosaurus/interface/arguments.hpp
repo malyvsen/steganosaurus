@@ -8,7 +8,7 @@
 class Arguments
 {
 public:
-    enum class Mode {unknown = -1, write, read, clear};
+    enum class Mode {unknown = -1, write, read, clear, help};
 
     Arguments();
     Arguments(const Mode mode, const std::string carrierPath, const std::string outputPath, const std::string dataPath = "");

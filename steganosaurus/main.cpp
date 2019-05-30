@@ -19,7 +19,8 @@ int main(int argc,char** argv)
    }
    catch (std::invalid_argument e)
    {
-        std::cout << "error: " << e.what() << '\n';
+        std::cout << "error: " << e.what() << std::endl;
+        std::cout << "to display a help message, run steganosaurus --help" << std::endl;
         return 1;
    }
 

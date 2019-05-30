@@ -1,6 +1,7 @@
 #include <memory>
 #include "communicator.hpp"
 #include "../encoders/simpleencoder.hpp"
+#include "../interface/help.hpp"
 
 
 
@@ -18,6 +19,9 @@ int Communicator::Action(Arguments *args)
             break;
         case Arguments::Mode::clear:
             return Clear(args->carrierPath, args->outputPath);
+        case Arguments::Mode::help:
+            Help::Display();
+            return 0;
         default:
             return -1;
     }

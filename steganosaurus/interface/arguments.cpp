@@ -35,6 +35,11 @@ Arguments* Arguments::Parse(const int argc, const char * const * const argv)
             if (i + 1 >= argc) throw std::invalid_argument("mode argument value missing");
             _mode = _ParseMode(std::string(argv[++i]));
         }
+        else if (arg == "-h" || arg == "--help")
+        {
+            _mode = Mode::help;
+            return this;
+        }
         else if (arg == "-d" || arg == "--data")
         {
             if (_dataPath != "") throw std::invalid_argument("data path provided more than once");
@@ -79,6 +84,7 @@ Arguments::Mode Arguments::_ParseMode(const std::string& name)
     if (name == "write") return Mode::write;
     if (name == "read") return Mode::read;
     if (name == "clear") return Mode::clear;
+    if (name == "help") return Mode::help;
     throw std::invalid_argument(std::string("\"") + name + std::string("\" is not a valid mode"));
 }
 
@@ -89,6 +95,7 @@ std::string Arguments::_ModeName(const Mode mode)
     if (mode == Mode::write) return "write";
     if (mode == Mode::read) return "read";
     if (mode == Mode::clear) return "clear";
+    if (mode == Mode::help) return "help";
     if (mode == Mode::unknown) return "unknown";
     throw std::invalid_argument(std::string("mode ") + std::to_string((int)mode) + std::string(" is not a valid mode"));
 }
