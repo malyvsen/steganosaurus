@@ -7,7 +7,7 @@
 
 int Communicator::Action(Arguments *args)
 {
-    InicializeEncoder(EncoderTypeEnum::simple);  //td
+    InitializeEncoder(EncoderTypeEnum::simple);  //td
 
     switch(args->mode)
     {
@@ -30,7 +30,8 @@ int Communicator::Action(Arguments *args)
     }
 }
 
-int Communicator::InicializeEncoder(Communicator::EncoderTypeEnum encoderType)
+
+int Communicator::InitializeEncoder(Communicator::EncoderTypeEnum encoderType)
 {
     switch (encoderType)
     {
@@ -42,6 +43,7 @@ int Communicator::InicializeEncoder(Communicator::EncoderTypeEnum encoderType)
         break;
     }
 }
+
 
 int Communicator::Encode(std::string carrierPath, std::string dataPath, std::string outputPath)
 {
@@ -69,8 +71,8 @@ int Communicator::Encode(std::string carrierPath, std::string dataPath, std::str
     photo.close();
     data.close();
     output.close();
-
 }
+
 
 int Communicator::Decode(std::string carrierPath, std::string outputPath)
 {
@@ -92,6 +94,7 @@ int Communicator::Decode(std::string carrierPath, std::string outputPath)
     photo.close();
     output.close();
 }
+
 
 int Communicator::Clear(std::string carrierPath, std::string outputPath)
 {
