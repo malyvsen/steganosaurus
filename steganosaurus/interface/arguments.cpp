@@ -35,6 +35,11 @@ Arguments* Arguments::Parse(const int argc, const char * const * const argv)
             if (i + 1 >= argc) throw std::invalid_argument("mode argument value missing");
             _mode = _ParseMode(std::string(argv[++i]));
         }
+        else if (arg == "-v" || arg == "--version")
+        {
+            _mode = Mode::version;
+            return this;
+        }
         else if (arg == "-h" || arg == "--help")
         {
             _mode = Mode::help;
@@ -84,6 +89,7 @@ Arguments::Mode Arguments::_ParseMode(const std::string& name)
     if (name == "write") return Mode::write;
     if (name == "read") return Mode::read;
     if (name == "clear") return Mode::clear;
+    if (name == "version") return Mode::version;
     if (name == "help") return Mode::help;
     throw std::invalid_argument(std::string("\"") + name + std::string("\" is not a valid mode"));
 }
@@ -95,6 +101,7 @@ std::string Arguments::_ModeName(const Mode mode)
     if (mode == Mode::write) return "write";
     if (mode == Mode::read) return "read";
     if (mode == Mode::clear) return "clear";
+    if (mode == Mode::version) return "version";
     if (mode == Mode::help) return "help";
     if (mode == Mode::unknown) return "unknown";
     throw std::invalid_argument(std::string("mode ") + std::to_string((int)mode) + std::string(" is not a valid mode"));

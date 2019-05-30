@@ -3,6 +3,7 @@
 #include <fstream>
 #include <memory>
 #include <string>
+#include <iostream>
 #include "../encoders/iencoder.hpp"
 #include "../interface/arguments.hpp"
 
