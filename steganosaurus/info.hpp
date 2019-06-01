@@ -12,7 +12,7 @@ namespace Info
     const std::string help =
     programName + " " + detailedVersion + "\n" +
     "options:\n"
-    "-m, --mode\tspecify mode: write/read/clear/help\n"
+    "-m, --mode\tspecify mode: write/read/clear/version/help\n"
     "-v, --version\tdisplay program version and quit\n"
     "-h, --help\tdisplay this message and quit\n"
     "-d, --data\tspecify path to file with data to write\n"
