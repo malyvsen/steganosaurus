@@ -6,7 +6,7 @@ test () {
     output=$3
     echo -n "$name "
     touch data carrier
-    if [[ $($command) = "$output" ]]; then
+    if [[ $($command) =~ "$output" ]]; then
         echo "pass"
     else
         echo "fail"

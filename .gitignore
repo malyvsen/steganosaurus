@@ -39,3 +39,4 @@ cmake-build-release
 example/*
 # test executable
 test/steganosaurus
+test/bash/steganosaurus
