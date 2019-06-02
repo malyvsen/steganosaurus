@@ -42,10 +42,12 @@ SCENARIO("encodeDecode", "[encode-decode]")
     std::string strData80="encodedecode/data/data-80.txt";
     std::string strData210="encodedecode/data/data-210.txt";
     std::string strData862="encodedecode/data/data-862.txt";
+    std::string strData155000 = "encodedecode/data/data-155.000.txt";
     std::string strImg1508="encodedecode/data/img-1.508.jpg";
     std::string strImg13="encodedecode/data/img-12.917.jpg";
     std::string strImgBlank1655="encodedecode/data/img-blank-1.655.jpg";
     std::string strImgblank679="encodedecode/data/img-blank-679.jpg";
+    std::string strImg155000 = "encodedecode/data/img-155.000.jpg";
     std::string str80="C++ is standardized by the International Organization for Standardization (ISO),";
     std::string str210=std::string("C++ is standardized by the International Organization for Standardization (ISO),")+
     " with the latest standard version ratified and published by ISO in December 2017 as ISO/IEC 14882:2017 (informally known as C++17)";
@@ -97,3 +99,17 @@ SCENARIO("encodeDecode", "[encode-decode]")
        REQUIRE(checkfile("encodedecode/data/output/output6.txt", str862));
    }
 }
+
+SCENARIO("encodeDecodeManualChecking", "[encode-decode-manual-checking]")
+{
+    std::string strData155000 = "encodedecode/data/data-155.000.txt";
+    std::string strImg155000 = "encodedecode/data/img-155.000.jpg";
+   GIVEN("Dino_Ratio 100%")
+   {
+       encode(strData155000,strImg155000,"encodedecode/data/output/output7.jpg");
+       decode("encodedecode/data/output/output7.jpg" , "encodedecode/data/output/output7JPG.jpg"  );
+   }
+}
+
+
+
