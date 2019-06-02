@@ -13,8 +13,8 @@ int main(int argc,char** argv)
             int ret = qtApp.exec();
         #else
             arguments->Parse(argc, argv);
-            Communicator::getInstance().Action(arguments);
         #endif
+        Communicator::getInstance().Action(arguments);
         delete arguments;
    }
    catch (std::invalid_argument e)
