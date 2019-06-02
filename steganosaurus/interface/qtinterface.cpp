@@ -1,12 +1,18 @@
 #include "qtinterface.hpp"
 #include "QString"
 #include "QFileDialog"
+#include "QDesktopWidget"
 #include <iostream>
 
 QtInterface::QtInterface(Arguments **args, QWidget *parent)
     : arg(args),
       QMainWindow(parent)
 {
+    QDesktopWidget dw;
+    int x=dw.width()*0.7;
+    int y=dw.height()*0.7;
+    this->setFixedSize(x,y);
+
     buttonDataPath = new QPushButton("DataPath", this);
     buttonDataPath->setGeometry(0,0,100,40);
 
@@ -17,6 +23,7 @@ QtInterface::QtInterface(Arguments **args, QWidget *parent)
     buttonOutputPath->setGeometry(0,80,100,40);
 
     buttonEncode = new QPushButton("Encode", this);
+    buttonEncode->setEnabled(false);
     buttonEncode->setGeometry(400,120,100,40);
 
 
@@ -45,6 +52,20 @@ QtInterface::QtInterface(Arguments **args, QWidget *parent)
     connect(buttonDataPath, SIGNAL(released()), this, SLOT(OnButtonDataPathSlot()));
     connect(buttonOutputPath, SIGNAL(released()), this, SLOT(OnButtonOutputPathSlot()));
     connect(buttonEncode, SIGNAL(released()), this, SLOT(OnButtonEncodeSlot()));
+    connect(checkboxMode, SIGNAL(toggled(bool)), this, SLOT(OncheckboxModeSlot()));
+}
+
+bool QtInterface::CheckIfEcodeButtonShouldBeEnabled()
+{
+    if(carrierPath.isEmpty() || outputPath.isEmpty())
+    {
+        return false;
+    }
+    if(dataPath.isEmpty() && checkboxMode->isChecked())
+    {
+        return false;
+    }
+    return true;
 }
 
 void QtInterface::OnButtonDataPathSlot()
@@ -53,6 +74,7 @@ void QtInterface::OnButtonDataPathSlot()
                                                     "/home",
                                                     tr("File (*.*)"));
     labelDataPath->setText(dataPath);
+    buttonEncode->setEnabled(CheckIfEcodeButtonShouldBeEnabled());
 }
 
 void QtInterface::OnButtonCarrierPathSlot()
@@ -61,6 +83,7 @@ void QtInterface::OnButtonCarrierPathSlot()
                                                     "/home",
                                                     tr("Images (*.jpg)"));
     labelCarrierPath->setText(carrierPath);
+    buttonEncode->setEnabled(CheckIfEcodeButtonShouldBeEnabled());
 }
 
 void QtInterface::OnButtonOutputPathSlot()
@@ -69,6 +92,7 @@ void QtInterface::OnButtonOutputPathSlot()
                                                                  "",
                                                                  tr("File (*.*)"));
     labelOutputPath->setText(outputPath);
+    buttonEncode->setEnabled(CheckIfEcodeButtonShouldBeEnabled());
 }
 
 void QtInterface::OnButtonEncodeSlot()
@@ -80,4 +104,9 @@ void QtInterface::OnButtonEncodeSlot()
         temp = Arguments::Mode::read;
     *arg = new Arguments(temp,carrierPath.toStdString(),outputPath.toStdString(),dataPath.toStdString());
     this->close();
+}
+
+void QtInterface::OncheckboxModeSlot()
+{
+    buttonEncode->setEnabled(CheckIfEcodeButtonShouldBeEnabled());
 }

@@ -29,11 +29,15 @@ private:
     QString carrierPath;
     QString outputPath;
 
+    bool CheckIfEcodeButtonShouldBeEnabled();
+
+
 private slots:
     void OnButtonDataPathSlot();
     void OnButtonCarrierPathSlot();
     void OnButtonOutputPathSlot();
     void OnButtonEncodeSlot();
+    void OncheckboxModeSlot();
 
 };
 
