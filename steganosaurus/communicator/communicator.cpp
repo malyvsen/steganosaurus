@@ -26,7 +26,7 @@ int Communicator::Action(Arguments *args)
             std::cout << Info::help << std::endl;
             return 0;
         default:
-            return -1;
+            throw std::invalid_argument(std::string("Not a valid mode"));
     }
 }
 
@@ -39,8 +39,7 @@ int Communicator::InitializeEncoder(Communicator::EncoderTypeEnum encoderType)
             _encoder = new SimpleEncoder();
             break;
         default:
-            return -100;
-        break;
+            throw std::invalid_argument(std::string("Not a valid encoder type"));
     }
 }
 
@@ -55,15 +54,18 @@ int Communicator::Encode(std::string carrierPath, std::string dataPath, std::str
     output.open(outputPath,std::ios_base::out | std::ios_base::binary);
     if (!photo.is_open())
     {
-        return -2;
+        throw std::invalid_argument( carrierPath + std::string(" couldn't be opened"));
     }
     if (!data.is_open())
     {
-        return -3;
+        photo.close();
+        throw std::invalid_argument( dataPath + std::string(" couldn't be opened"));
     }
     if (!output.is_open())
     {
-        return -4;
+        photo.close();
+        data.close();
+        throw std::invalid_argument( outputPath + std::string(" couldn't be opened"));
     }
 
     _encoder->Encode(photo, data, output);
@@ -71,6 +73,7 @@ int Communicator::Encode(std::string carrierPath, std::string dataPath, std::str
     photo.close();
     data.close();
     output.close();
+    return 0;
 }
 
 
@@ -82,17 +85,19 @@ int Communicator::Decode(std::string carrierPath, std::string outputPath)
     output.open(outputPath,std::ios_base::out | std::ios_base::binary);
     if (!photo.is_open())
     {
-        return -2;
+        throw std::invalid_argument( carrierPath + std::string(" couldn't be opened"));
     }
     if (!output.is_open())
     {
-        return -4;
+        photo.close();
+        throw std::invalid_argument( outputPath + std::string(" couldn't be opened"));
     }
 
     _encoder->Decode(photo, output);
 
     photo.close();
     output.close();
+    return 0;
 }
 
 
@@ -104,15 +109,17 @@ int Communicator::Clear(std::string carrierPath, std::string outputPath)
     output.open(outputPath,std::ios_base::out | std::ios_base::binary);
     if (!photo.is_open())
     {
-        return -2;
+        throw std::invalid_argument( carrierPath + std::string(" couldn't be opened"));
     }
     if (!output.is_open())
     {
-        return -4;
+        photo.close();
+        throw std::invalid_argument( outputPath + std::string(" couldn't be opened"));
     }
 
     _encoder->Clear(photo, output);
 
     photo.close();
     output.close();
+    return 0;
 }
