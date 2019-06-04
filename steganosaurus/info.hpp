@@ -7,7 +7,7 @@
 namespace Info
 {
     const std::string programName = "steganosaurus";
-    const std::string version = "0.3.1";
+    const std::string version = "1.0.0";
     const std::string detailedVersion = version + ", built " + __DATE__ + " at " + __TIME__;
     const std::string help =
     programName + " " + detailedVersion + "\n" +
