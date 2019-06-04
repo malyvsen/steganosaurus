@@ -31,6 +31,8 @@ int SimpleEncoder::Decode(std::ifstream &photo, std::ofstream &output)
     for(int i = 0; i< 4; i++)
         dataSizeBuf[i] = memblock[pfotoSize - 1 - i];
     int dataSize = *(int*)dataSizeBuf;
+    if(dataSize <= 0 ||  dataSize >= (pfotoSize - 10 ))
+        throw std::invalid_argument( std::string("No data encoded"));
     for(int i = 0; i < dataSize; i++)
         output << memblock[pfotoSize - 4 - dataSize + i];
     delete[] memblock;
@@ -47,6 +49,8 @@ int SimpleEncoder::Clear(std::ifstream &photo, std::ofstream &output)
     for(int i = 0; i< 4; i++)
         dataSizeBuf[i] = memblock[pfotoSize - 1 - i];
     int dataSize = *(int*)dataSizeBuf;
+    if(dataSize <= 0 ||  dataSize >= (pfotoSize - 10 ))
+        throw std::invalid_argument( std::string("No data encoded"));
     for(int i = 0; i < pfotoSize - dataSize - 4; i++)
         output << memblock[i];
     delete[] memblock;

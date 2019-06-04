@@ -4,7 +4,8 @@
 #include <QMainWindow>
 #include <QLabel>
 #include <QPushButton>
-#include <QCheckBox>
+#include <QGroupBox>
+#include <QRadioButton>
 #include <interface/arguments.hpp>
 
 class QtInterface: public QMainWindow
@@ -23,7 +24,13 @@ private:
     QPushButton *buttonOutputPath;
     QPushButton *buttonEncode;
 
-    QCheckBox *checkboxMode;
+    QGroupBox *groupBox;
+
+    QRadioButton *radio1;
+    QRadioButton *radio2;
+    QRadioButton *radio3;
+
+
 
     QString dataPath;
     QString carrierPath;

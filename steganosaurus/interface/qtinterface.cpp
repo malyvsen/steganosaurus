@@ -2,6 +2,7 @@
 #include "QString"
 #include "QFileDialog"
 #include "QDesktopWidget"
+#include <QVBoxLayout>
 #include <iostream>
 
 QtInterface::QtInterface(Arguments **args, QWidget *parent)
@@ -24,7 +25,7 @@ QtInterface::QtInterface(Arguments **args, QWidget *parent)
 
     buttonEncode = new QPushButton("Encode", this);
     buttonEncode->setEnabled(false);
-    buttonEncode->setGeometry(400,120,100,40);
+    buttonEncode->setGeometry(400,200,100,40);
 
 
     QFont minFont("Arial", 16, QFont::Bold);
@@ -43,16 +44,30 @@ QtInterface::QtInterface(Arguments **args, QWidget *parent)
     labelOutputPath->setFont(minFont);
     labelOutputPath->setText("labelOutputPath");
 
-    checkboxMode = new QCheckBox("Hide", this);
-    checkboxMode->setGeometry(200,120,100,40);
-    checkboxMode->setFont(minFont);
+    groupBox = new QGroupBox(tr("Choose mode"), this);
+    groupBox->setGeometry(0,160,150,150);
+    radio1 = new QRadioButton(tr("Encode"));
+    radio1->setFont(minFont);
+    radio2 = new QRadioButton(tr("Decode"));
+    radio2->setFont(minFont);
+    radio3 = new QRadioButton(tr("Clear"));
+    radio3->setFont(minFont);
+    radio1->setChecked(true);
 
+    QVBoxLayout *vbox = new QVBoxLayout;
+    vbox->addWidget(radio1);
+    vbox->addWidget(radio2);
+    vbox->addWidget(radio3);
+    vbox->addStretch(1);
+    groupBox->setLayout(vbox);
 
     connect(buttonCarrierPath, SIGNAL(released()), this, SLOT(OnButtonCarrierPathSlot()));
     connect(buttonDataPath, SIGNAL(released()), this, SLOT(OnButtonDataPathSlot()));
     connect(buttonOutputPath, SIGNAL(released()), this, SLOT(OnButtonOutputPathSlot()));
     connect(buttonEncode, SIGNAL(released()), this, SLOT(OnButtonEncodeSlot()));
-    connect(checkboxMode, SIGNAL(toggled(bool)), this, SLOT(OncheckboxModeSlot()));
+    connect(radio1, SIGNAL(toggled(bool)), this, SLOT(OncheckboxModeSlot()));
+    connect(radio2, SIGNAL(toggled(bool)), this, SLOT(OncheckboxModeSlot()));
+    connect(radio3, SIGNAL(toggled(bool)), this, SLOT(OncheckboxModeSlot()));
 }
 
 bool QtInterface::CheckIfEcodeButtonShouldBeEnabled()
@@ -61,7 +76,7 @@ bool QtInterface::CheckIfEcodeButtonShouldBeEnabled()
     {
         return false;
     }
-    if(dataPath.isEmpty() && checkboxMode->isChecked())
+    if(dataPath.isEmpty() && radio1->isChecked())
     {
         return false;
     }
@@ -98,10 +113,14 @@ void QtInterface::OnButtonOutputPathSlot()
 void QtInterface::OnButtonEncodeSlot()
 {
     Arguments::Mode temp;
-    if(checkboxMode->isChecked())
+
+    if(radio1->isChecked())
         temp = Arguments::Mode::write;
-    else
+    if(radio2->isChecked())
         temp = Arguments::Mode::read;
+    if(radio3->isChecked())
+        temp = Arguments::Mode::clear;
+
     *arg = new Arguments(temp,carrierPath.toStdString(),outputPath.toStdString(),dataPath.toStdString());
     this->close();
 }

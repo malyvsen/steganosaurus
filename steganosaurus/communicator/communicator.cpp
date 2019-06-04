@@ -8,7 +8,8 @@
 int Communicator::Action(Arguments *args)
 {
     InitializeEncoder(EncoderTypeEnum::simple);  //td
-
+    if(args->carrierPath.compare(args->outputPath) == 0)
+        throw std::invalid_argument(std::string("Carrier and output could not be the same file"));
     switch(args->mode)
     {
         case Arguments::Mode::write:
@@ -67,7 +68,20 @@ int Communicator::Encode(std::string carrierPath, std::string dataPath, std::str
         data.close();
         throw std::invalid_argument( outputPath + std::string(" couldn't be opened"));
     }
-
+    try
+    {
+        char temp;
+        char temp2;
+        photo.read(&temp, 1);
+        photo.read(&temp2, 1);
+        if(temp != 0xFF || temp2 != 0xD8)
+            throw std::invalid_argument( carrierPath + std::string(" file is not JPG, or is corrupted"));
+        photo.seekg(0, std::ios::beg);
+    }
+    catch (...)
+    {
+        throw std::invalid_argument( carrierPath + std::string(" file is not JPG, or is corrupted"));
+    }
     _encoder->Encode(photo, data, output);
 
     photo.close();
