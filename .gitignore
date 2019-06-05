@@ -37,6 +37,8 @@ cmake-build-release
 
 # Steganosaurus project-specific
 example/*
+build/*
+
 # test executable
 test/steganosaurus
 test/bash/steganosaurus
