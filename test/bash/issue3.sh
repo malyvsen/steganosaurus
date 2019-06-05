@@ -3,7 +3,7 @@
 
 
 echo -n "- user decode file without message: "
-output="No data encoded"
+output="no data encoded"
 if [[ $(./steganosaurus read image.jpg output) =~ "$output" ]]; then
     echo "pass"
 else
