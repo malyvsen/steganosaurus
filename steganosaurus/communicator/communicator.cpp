@@ -70,10 +70,10 @@ int Communicator::Encode(std::string carrierPath, std::string dataPath, std::str
     }
     try
     {
-        char temp;
-        char temp2;
-        photo.read(&temp, 1);
-        photo.read(&temp2, 1);
+        unsigned char temp;
+        unsigned char temp2;
+        photo.read((char*)(&temp), 1);
+        photo.read((char*)(&temp2), 1);
         if(temp != 0xFF || temp2 != 0xD8)
             throw std::invalid_argument( carrierPath + std::string(" file is not JPG, or is corrupted"));
         photo.seekg(0, std::ios::beg);
