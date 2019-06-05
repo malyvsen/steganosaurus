@@ -46,47 +46,22 @@ void Communicator::InitializeEncoder(Communicator::EncoderTypeEnum encoderType)
 
 void Communicator::Encode(std::string carrierPath, std::string dataPath, std::string outputPath)
 {
-    std::ifstream photoFile; std::stringstream photoStream;
-    photoFile.open(carrierPath,std::ios_base::in | std::ios_base::binary);
-    if (!photoFile.is_open()) throw std::invalid_argument(carrierPath + std::string(" couldn't be opened"));
-    photoStream << photoFile.rdbuf();
-    photoFile.close();
-
-    std::ifstream dataFile; std::stringstream dataStream;
-    dataFile.open(dataPath,std::ios_base::in | std::ios_base::binary);
-    if (!dataFile.is_open()) throw std::invalid_argument(dataPath + std::string(" couldn't be opened"));
-    dataStream << dataFile.rdbuf();
-    dataFile.close();
+    std::stringstream photoStream = _ReadJPG(carrierPath);
+    std::stringstream dataStream = _ReadFile(dataPath);
 
     std::ofstream outputFile;
     outputFile.open(outputPath, std::ios_base::out | std::ios_base::binary);
     if (!outputFile.is_open()) throw std::invalid_argument(outputPath + std::string(" couldn't be opened"));
 
-    try
-    {
-        unsigned char temp;
-        unsigned char temp2;
-        photoStream.read((char*)(&temp), 1);
-        photoStream.read((char*)(&temp2), 1);
-        if(temp != 0xFF || temp2 != 0xD8)
-            throw std::invalid_argument(carrierPath + std::string(" is not JPG, or is corrupted"));
-        photoStream.seekg(0, std::ios::beg);
-    }
-    catch (...)
-    {
-        throw std::invalid_argument(carrierPath + std::string(" is not JPG, or is corrupted"));
-    }
     _encoder->Encode(photoStream, dataStream, outputFile);
+
+    outputFile.close();
 }
 
 
 void Communicator::Decode(std::string carrierPath, std::string outputPath)
 {
-    std::ifstream photoFile; std::stringstream photoStream;
-    photoFile.open(carrierPath,std::ios_base::in | std::ios_base::binary);
-    if (!photoFile.is_open()) throw std::invalid_argument(carrierPath + std::string(" couldn't be opened"));
-    photoStream << photoFile.rdbuf();
-    photoFile.close();
+    std::stringstream photoStream = _ReadJPG(carrierPath);
 
     std::ofstream outputFile;
     outputFile.open(outputPath, std::ios_base::out | std::ios_base::binary);
@@ -100,11 +75,7 @@ void Communicator::Decode(std::string carrierPath, std::string outputPath)
 
 void Communicator::Clear(std::string carrierPath, std::string outputPath)
 {
-    std::ifstream photoFile; std::stringstream photoStream;
-    photoFile.open(carrierPath,std::ios_base::in | std::ios_base::binary);
-    if (!photoFile.is_open()) throw std::invalid_argument(carrierPath + std::string(" couldn't be opened"));
-    photoStream << photoFile.rdbuf();
-    photoFile.close();
+    std::stringstream photoStream = _ReadJPG(carrierPath);
 
     std::ofstream outputFile;
     outputFile.open(outputPath, std::ios_base::out | std::ios_base::binary);
@@ -113,4 +84,40 @@ void Communicator::Clear(std::string carrierPath, std::string outputPath)
     _encoder->Clear(photoStream, outputFile);
 
     outputFile.close();
+}
+
+
+std::stringstream Communicator::_ReadFile(std::string path)
+{
+    std::ifstream file; std::stringstream stream;
+    file.open(path, std::ios_base::in | std::ios_base::binary);
+    if (!file.is_open()) throw std::invalid_argument(path + std::string(" couldn't be opened"));
+    stream << file.rdbuf();
+    file.close();
+    return stream;
+}
+
+
+std::stringstream Communicator::_ReadJPG(std::string path)
+{
+    std::stringstream stream = _ReadFile(path);
+
+    if (stream.tellg() < 0) throw std::invalid_argument(path + " is an empty file");
+
+    try
+    {
+        unsigned char temp;
+        unsigned char temp2;
+        stream.read((char*)(&temp), 1);
+        stream.read((char*)(&temp2), 1);
+        if(temp != 0xFF || temp2 != 0xD8)
+            throw std::invalid_argument(path + std::string(" is not JPG, or is corrupted"));
+        stream.seekg(0, std::ios::beg);
+    }
+    catch (...)
+    {
+        throw std::invalid_argument(path + std::string(" is not JPG, or is corrupted"));
+    }
+
+    return stream;
 }

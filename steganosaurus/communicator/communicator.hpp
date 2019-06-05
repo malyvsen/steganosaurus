@@ -36,5 +36,8 @@ private:
     void Decode(std::string carrierPath, std::string outputPath);
     void Clear(std::string carrierPath, std::string outputPath);
 
+    static std::stringstream _ReadFile(std::string path);
+    static std::stringstream _ReadJPG(std::string path);
+
     IEncoder* _encoder = nullptr;
 };
