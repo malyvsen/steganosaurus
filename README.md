@@ -27,7 +27,7 @@ steganosaurus clear <carrier> <output>
 ```
 
 # So how secret is it exactly?
-Not very. In fact, you can open a carrier image in any text editor and find the data stored in plan text at the end of the image file. The trick is simply that this doesn't show up in an image viewer, so your carrier image doesn't raise any suspicion of anything being hidden in it at all.
+Not very. In fact, you can open a carrier image in any text editor and find the data stored in plain text at the end of the image file. The trick is simply that this doesn't show up in an image viewer, so your carrier image doesn't raise any suspicion of anything being hidden in it at all.
 
 # API
 Steganosaurus provides a minimalist API in the form of encoders. Currently, only the [SimpleEncoder](steganosaurus/encoders/simpleencoder.hpp) is available, which reads/writes plaintext data at the end of JPG files. You are, however, most welcome to add more encoders implementing the [IEncoder](steganosaurus/encoders/iencoder.hpp) interface!
