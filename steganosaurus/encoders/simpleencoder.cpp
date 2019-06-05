@@ -9,7 +9,7 @@ SimpleEncoder::SimpleEncoder()
 
 }
 
-int SimpleEncoder::Encode(std::ifstream &photo, std::ifstream &data, std::ofstream &output)
+void SimpleEncoder::Encode(std::ifstream &photo, std::ifstream &data, std::ofstream &output)
 {
     output << photo.rdbuf();
     output << data.rdbuf();
@@ -20,7 +20,7 @@ int SimpleEncoder::Encode(std::ifstream &photo, std::ifstream &data, std::ofstre
     output << ((char*)&dataSize)[0];
 }
 
-int SimpleEncoder::Decode(std::ifstream &photo, std::ofstream &output)
+void SimpleEncoder::Decode(std::ifstream &photo, std::ofstream &output)
 {
     photo.seekg (0, std::ios::end);
     int pfotoSize = photo.tellg();
@@ -31,14 +31,14 @@ int SimpleEncoder::Decode(std::ifstream &photo, std::ofstream &output)
     for(int i = 0; i< 4; i++)
         dataSizeBuf[i] = memblock[pfotoSize - 1 - i];
     int dataSize = *(int*)dataSizeBuf;
-    if(dataSize <= 0 ||  dataSize >= (pfotoSize - 10 ))
-        throw std::invalid_argument( std::string("No data encoded"));
+    if(dataSize <= 0 ||  dataSize >= (pfotoSize - 10))
+        throw std::invalid_argument("no data encoded");
     for(int i = 0; i < dataSize; i++)
         output << memblock[pfotoSize - 4 - dataSize + i];
     delete[] memblock;
 }
 
-int SimpleEncoder::Clear(std::ifstream &photo, std::ofstream &output)
+void SimpleEncoder::Clear(std::ifstream &photo, std::ofstream &output)
 {
     photo.seekg (0, std::ios::end);
     int pfotoSize = photo.tellg();
@@ -49,8 +49,8 @@ int SimpleEncoder::Clear(std::ifstream &photo, std::ofstream &output)
     for(int i = 0; i< 4; i++)
         dataSizeBuf[i] = memblock[pfotoSize - 1 - i];
     int dataSize = *(int*)dataSizeBuf;
-    if(dataSize <= 0 ||  dataSize >= (pfotoSize - 10 ))
-        throw std::invalid_argument( std::string("No data encoded"));
+    if(dataSize <= 0 ||  dataSize >= (pfotoSize - 10))
+        throw std::invalid_argument("no data encoded");
     for(int i = 0; i < pfotoSize - dataSize - 4; i++)
         output << memblock[i];
     delete[] memblock;

@@ -8,7 +8,7 @@ class IEncoder
 {
 public:
     IEncoder();
-    int virtual Encode(std::ifstream &photo, std::ifstream &data, std::ofstream &output) = 0;
-    int virtual Decode(std::ifstream &photo, std::ofstream &output) = 0;
-    int virtual Clear(std::ifstream &photo, std::ofstream &output) = 0;
+    void virtual Encode(std::ifstream &photo, std::ifstream &data, std::ofstream &output) = 0;
+    void virtual Decode(std::ifstream &photo, std::ofstream &output) = 0;
+    void virtual Clear(std::ifstream &photo, std::ofstream &output) = 0;
 };

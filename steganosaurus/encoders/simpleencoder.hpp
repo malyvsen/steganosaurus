@@ -11,7 +11,7 @@ public:
 
     // IEncoder interface
 public:
-    int Encode(std::ifstream &photo, std::ifstream &data, std::ofstream &output);
-    int Decode(std::ifstream &photo, std::ofstream &output);
-    int Clear(std::ifstream &photo, std::ofstream &output);
+    void Encode(std::ifstream &photo, std::ifstream &data, std::ofstream &output);
+    void Decode(std::ifstream &photo, std::ofstream &output);
+    void Clear(std::ifstream &photo, std::ofstream &output);
 };

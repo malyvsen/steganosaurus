@@ -5,7 +5,7 @@
 
 
 
-int Communicator::Action(Arguments *args)
+void Communicator::Action(Arguments *args)
 {
     InitializeEncoder(EncoderTypeEnum::simple);  //td
     if(args->carrierPath.compare(args->outputPath) == 0)
@@ -13,21 +13,22 @@ int Communicator::Action(Arguments *args)
     switch(args->mode)
     {
         case Arguments::Mode::write:
-            return Encode(args->carrierPath, args->dataPath, args->outputPath);
+            Encode(args->carrierPath, args->dataPath, args->outputPath);
             break;
         case Arguments::Mode::read:
-            return Decode(args->carrierPath, args->outputPath);
+            Decode(args->carrierPath, args->outputPath);
             break;
         case Arguments::Mode::clear:
-            return Clear(args->carrierPath, args->outputPath);
+            Clear(args->carrierPath, args->outputPath);
+            break;
         case Arguments::Mode::version:
             std::cout << Info::programName + " " + Info::detailedVersion << std::endl;
-            return 0;
+            break;
         case Arguments::Mode::help:
             std::cout << Info::help << std::endl;
-            return 0;
+            break;
         default:
-            throw std::invalid_argument(std::string("Not a valid mode"));
+            throw std::invalid_argument(std::string("unhandled mode in communicator"));
     }
 }
 

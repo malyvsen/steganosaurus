@@ -20,7 +20,7 @@ public:
     Communicator(Communicator const&)   = delete;
     void operator=(Communicator const&)  = delete;
 
-    int Action(Arguments *args);
+    void Action(Arguments *args);
     ~Communicator()
     {
         if(_encoder != nullptr)
