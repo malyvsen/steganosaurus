@@ -31,7 +31,7 @@ void Communicator::Action(Arguments *args)
 }
 
 
-int Communicator::InitializeEncoder(Communicator::EncoderTypeEnum encoderType)
+void Communicator::InitializeEncoder(Communicator::EncoderTypeEnum encoderType)
 {
     switch (encoderType)
     {
@@ -44,7 +44,7 @@ int Communicator::InitializeEncoder(Communicator::EncoderTypeEnum encoderType)
 }
 
 
-int Communicator::Encode(std::string carrierPath, std::string dataPath, std::string outputPath)
+void Communicator::Encode(std::string carrierPath, std::string dataPath, std::string outputPath)
 {
     std::ifstream photoFile; std::stringstream photoStream;
     photoFile.open(carrierPath,std::ios_base::in | std::ios_base::binary);
@@ -77,12 +77,10 @@ int Communicator::Encode(std::string carrierPath, std::string dataPath, std::str
         throw std::invalid_argument(carrierPath + std::string(" is not JPG, or is corrupted"));
     }
     _encoder->Encode(photoStream, dataStream, outputFile);
-
-    return 0;
 }
 
 
-int Communicator::Decode(std::string carrierPath, std::string outputPath)
+void Communicator::Decode(std::string carrierPath, std::string outputPath)
 {
     std::ifstream photoFile; std::stringstream photoStream;
     photoFile.open(carrierPath,std::ios_base::in | std::ios_base::binary);
@@ -97,11 +95,10 @@ int Communicator::Decode(std::string carrierPath, std::string outputPath)
     _encoder->Decode(photoStream, outputFile);
 
     outputFile.close();
-    return 0;
 }
 
 
-int Communicator::Clear(std::string carrierPath, std::string outputPath)
+void Communicator::Clear(std::string carrierPath, std::string outputPath)
 {
     std::ifstream photoFile; std::stringstream photoStream;
     photoFile.open(carrierPath,std::ios_base::in | std::ios_base::binary);
@@ -116,5 +113,4 @@ int Communicator::Clear(std::string carrierPath, std::string outputPath)
     _encoder->Clear(photoStream, outputFile);
 
     outputFile.close();
-    return 0;
 }
