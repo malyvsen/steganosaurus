@@ -37,13 +37,13 @@ Arguments* Arguments::Parse(const int argc, const char * const * const argv)
         }
         else if (arg == "-v" || arg == "--version")
         {
+            if (_mode != Mode::unknown) throw std::invalid_argument("mode provided more than once");
             _mode = Mode::version;
-            return this;
         }
         else if (arg == "-h" || arg == "--help")
         {
+            if (_mode != Mode::unknown) throw std::invalid_argument("mode provided more than once");
             _mode = Mode::help;
-            return this;
         }
         else if (arg == "-d" || arg == "--data")
         {
@@ -76,8 +76,17 @@ Arguments* Arguments::Parse(const int argc, const char * const * const argv)
     {
         if (_dataPath != "") throw std::invalid_argument(std::string("data path provided with mode == ") + _ModeName(_mode));
     }
-    if (_carrierPath == "") throw std::invalid_argument("carrier path not provided");
-    if (_outputPath == "") throw std::invalid_argument("output path not provided");
+
+    if (_mode == Mode::write || _mode == Mode::read || _mode == Mode::clear)
+    {
+        if (_carrierPath == "") throw std::invalid_argument("carrier path not provided");
+        if (_outputPath == "") throw std::invalid_argument("output path not provided");
+    }
+    else
+    {
+        if (_carrierPath != "") throw std::invalid_argument("carrier path provided with mode " + _ModeName(_mode));
+        if (_outputPath != "") throw std::invalid_argument("output path provided with mode " + _ModeName(_mode));
+    }
 
     return this;
 }
