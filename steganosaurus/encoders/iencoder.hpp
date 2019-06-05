@@ -1,6 +1,6 @@
 #pragma once
 
-#include <fstream>
+#include <iostream>
 
 
 
@@ -8,7 +8,7 @@ class IEncoder
 {
 public:
     IEncoder();
-    void virtual Encode(std::ifstream &photo, std::ifstream &data, std::ofstream &output) = 0;
-    void virtual Decode(std::ifstream &photo, std::ofstream &output) = 0;
-    void virtual Clear(std::ifstream &photo, std::ofstream &output) = 0;
+    void virtual Encode(std::istream &photo, std::istream &data, std::ostream &output) = 0;
+    void virtual Decode(std::istream &photo, std::ostream &output) = 0;
+    void virtual Clear(std::istream &photo, std::ostream &output) = 0;
 };

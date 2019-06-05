@@ -1,5 +1,7 @@
 #pragma once
 
+#include <iostream>
+
 #include "iencoder.hpp"
 
 
@@ -11,7 +13,7 @@ public:
 
     // IEncoder interface
 public:
-    void Encode(std::ifstream &photo, std::ifstream &data, std::ofstream &output);
-    void Decode(std::ifstream &photo, std::ofstream &output);
-    void Clear(std::ifstream &photo, std::ofstream &output);
+    void Encode(std::istream &photo, std::istream &data, std::ostream &output);
+    void Decode(std::istream &photo, std::ostream &output);
+    void Clear(std::istream &photo, std::ostream &output);
 };

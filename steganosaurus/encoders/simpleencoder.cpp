@@ -1,5 +1,3 @@
-#include <iostream>
-#include <fstream>
 #include "simpleencoder.hpp"
 
 
@@ -9,7 +7,7 @@ SimpleEncoder::SimpleEncoder()
 
 }
 
-void SimpleEncoder::Encode(std::ifstream &photo, std::ifstream &data, std::ofstream &output)
+void SimpleEncoder::Encode(std::istream& photo, std::istream& data, std::ostream& output)
 {
     output << photo.rdbuf();
     output << data.rdbuf();
@@ -20,38 +18,40 @@ void SimpleEncoder::Encode(std::ifstream &photo, std::ifstream &data, std::ofstr
     output << ((char*)&dataSize)[0];
 }
 
-void SimpleEncoder::Decode(std::ifstream &photo, std::ofstream &output)
+void SimpleEncoder::Decode(std::istream& photo, std::ostream& output)
 {
     photo.seekg (0, std::ios::end);
-    int pfotoSize = photo.tellg();
-    char *memblock = new char [pfotoSize];
+    int photoSize = photo.tellg();
+    char *memblock = new char [photoSize];
     photo.seekg (0, std::ios::beg);
-    photo.read (memblock, pfotoSize);
+    photo.read (memblock, photoSize);
     char dataSizeBuf[4];
     for(int i = 0; i< 4; i++)
-        dataSizeBuf[i] = memblock[pfotoSize - 1 - i];
+        dataSizeBuf[i] = memblock[photoSize - 1 - i];
     int dataSize = *(int*)dataSizeBuf;
-    if(dataSize <= 0 ||  dataSize >= (pfotoSize - 10))
+    if(dataSize <= 0 ||  dataSize >= (photoSize - 10))
         throw std::invalid_argument("no data encoded");
+
     for(int i = 0; i < dataSize; i++)
-        output << memblock[pfotoSize - 4 - dataSize + i];
+        output << memblock[photoSize - 4 - dataSize + i];
     delete[] memblock;
 }
 
-void SimpleEncoder::Clear(std::ifstream &photo, std::ofstream &output)
+void SimpleEncoder::Clear(std::istream& photo, std::ostream& output)
 {
     photo.seekg (0, std::ios::end);
-    int pfotoSize = photo.tellg();
-    char *memblock = new char [pfotoSize];
+    int photoSize = photo.tellg();
+    char *memblock = new char [photoSize];
     photo.seekg (0, std::ios::beg);
-    photo.read (memblock, pfotoSize);
+    photo.read (memblock, photoSize);
     char dataSizeBuf[4];
     for(int i = 0; i< 4; i++)
-        dataSizeBuf[i] = memblock[pfotoSize - 1 - i];
+        dataSizeBuf[i] = memblock[photoSize - 1 - i];
     int dataSize = *(int*)dataSizeBuf;
-    if(dataSize <= 0 ||  dataSize >= (pfotoSize - 10))
+    if(dataSize <= 0 ||  dataSize >= (photoSize - 10))
         throw std::invalid_argument("no data encoded");
-    for(int i = 0; i < pfotoSize - dataSize - 4; i++)
+
+    for(int i = 0; i < photoSize - dataSize - 4; i++)
         output << memblock[i];
     delete[] memblock;
 }
