@@ -3,7 +3,7 @@ CONFIG += console c++11
 CONFIG -= app_bundle
 QMAKE_CFLAGS += -std=c++11
 #CONFIG -= qt
-#DEFINES += GUI
+DEFINES += GUI
 QT += core gui widgets
 
 SOURCES += main.cpp \

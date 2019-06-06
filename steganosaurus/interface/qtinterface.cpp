@@ -127,5 +127,24 @@ void QtInterface::OnButtonEncodeSlot()
 
 void QtInterface::OncheckboxModeSlot()
 {
+    if(radio1->isChecked())
+    {
+        buttonEncode->setText("Encode");
+        buttonDataPath->show();
+        labelDataPath->show();
+    }
+    if(radio2->isChecked())
+    {
+        buttonEncode->setText("Decode");
+        buttonDataPath->hide();
+        labelDataPath->hide();
+    }
+    if(radio3->isChecked())
+    {
+        buttonEncode->setText("Clear");
+        buttonDataPath->hide();
+        labelDataPath->hide();
+    }
+
     buttonEncode->setEnabled(CheckIfEcodeButtonShouldBeEnabled());
 }
